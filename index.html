@@ -13,7 +13,6 @@
 <body>
   <h1>Hiển thị ảnh từ URL</h1>
   <img id="photo" alt="Chọn ảnh qua tham số ?key=" />
-  <p class="notice">Ví dụ: <code>?key=abc123</code> hoặc <code>?key=dog</code></p>
 
   <script>
     const params = new URLSearchParams(window.location.search);
@@ -23,7 +22,8 @@
     // Danh sách key hợp lệ và trang đích
     const redirectMap = {
       "abc123": "quiz1.html",
-      "xyz789": "page2.html"
+      "defgh": "quiz2.html",
+      "010101": "quiz3.html"
     };
 
     // Danh sách ảnh sẵn có khi key sai
@@ -31,7 +31,7 @@
 
     if (key && redirectMap[key]) {
       // Nếu key đúng => điều hướng
-      window.location.href = "./quiz1.html";
+      window.location.href = redirectMap[key];
     } else if (key && imageList.includes(key)) {
       // Nếu key sai nhưng trùng tên ảnh => hiển thị ảnh
       img.src = `images/${key}.jpg`;

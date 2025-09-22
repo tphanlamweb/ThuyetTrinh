@@ -108,7 +108,7 @@
   <div class="modal-content">
     <p id="resultText"></p>
     <!-- Ảnh minh họa khi đúng -->
-    <img id="correctImg" src="/images/Huy_Hoa_Buom.jpg" alt="Ảnh minh họa" 
+    <img id="correctImg" src="/images/Tang_Hoa.jpg" alt="Ảnh minh họa" 
          style="display:none; max-width:100%; border-radius:8px; margin-top:10px;">
     <button class="close-btn" id="closeResult">Chọn lại</button>
   </div>
@@ -159,20 +159,20 @@ function showResult() {
   document.getElementById('resultModal').style.display = 'flex';
   //document.body.classList.add('disable-all');
   submitBtn.disabled = true;
-  document.getElementById('closeResult').addEventListener('click', () => {
-    document.body.classList.remove('disable-all');
-  });
-}
-
+  
     // Đóng kết quả (chỉ ẩn modal, trang đã bị disable)
     document.getElementById('closeResult').addEventListener('click', () => {
         if(i = 1){
       document.getElementById('resultText').textContent = 'Lew Lew chỉ được chọn một lần thôi.';
       document.getElementById('resultText').style.color = "red";}
-      else if(i = 0){
+      else {
         document.getElementById('resultText').textContent = 'Bạn không thể tương tác với web được nữa.';
       }
     });
+
+}
+
+
   </script>
 </body>
 </html>
