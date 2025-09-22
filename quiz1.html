@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+      text-align: center;
+    }
+    h1 { margin-bottom: 20px; }
+    .options {
+      display: grid;
+      gap: 10px;
+      max-width: 300px;
+      margin: 0 auto 20px;
+    }
+    .option-btn {
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .option-btn:hover {
+      background: #2980b9;
+    }
+    #submitBtn {
+      padding: 12px 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    #submitBtn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Modal chung */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 300px;
+    }
+    .close-btn {
+      margin-top: 15px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .disable-all {
+      pointer-events: none;
+
+    }
+  </style>
+</head>
+<body>
+  <h1>Câu hỏi số 1</h1>
+  <p>Bán hàng trực tiếp là gì?</p>
+
+  <div class="options" id="options">
+    <button class="option-btn" data-answer="f">Bán hàng thông qua siêu thị và cửa hàng lớn</button>
+    <button class="option-btn" data-answer="t">Bán hàng trực tiếp từ người bán đến người mua, không qua cửa hàng </button>
+    <button class="option-btn" data-answer="f">Bán hàng chỉ qua các trang thương mại điện tử </button>
+    <button class="option-btn" data-answer="f">Bán hàng qua truyền hình</button>
+    <button class="option-btn" data-answer="f">Bán hàng chỉ dành riêng cho doanh nghiệp, không có khách hàng cá nhân</button>
+  </div>
+
+  <button id="submitBtn" disabled>Nộp</button>
+
+  <!-- Modal thông báo lưu ý -->
+  <div id="noticeModal" class="modal">
+    <div class="modal-content">
+      <p>Lưu ý: Mỗi bạn chỉ được chọn 1 lần duy nhất</p>
+      <button class="close-btn" id="confirmNotice">OK</button>
+    </div>
+  </div>
+
+<!-- Modal kết quả -->
+<div id="resultModal" class="modal">
+  <div class="modal-content">
+    <p id="resultText"></p>
+    <!-- Ảnh minh họa khi đúng -->
+    <img id="correctImg" src="/images/Huy_Hoa_Buom.jpg" alt="Ảnh minh họa" 
+         style="display:none; max-width:100%; border-radius:8px; margin-top:10px;">
+    <button class="close-btn" id="closeResult">Chọn lại</button>
+  </div>
+</div>
+
+  <script>
+    const optionButtons = document.querySelectorAll('.option-btn');
+    const submitBtn = document.getElementById('submitBtn');
+    let selectedAnswer = null;
+    const correctAnswer = "t";
+    let i = 1;
+    // Chọn đáp án
+    optionButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        optionButtons.forEach(b => b.style.background = '#3498db');
+        btn.style.background = '#1abc9c';
+        selectedAnswer = btn.dataset.answer;
+        submitBtn.disabled = false;
+      });
+    });
+
+    // Khi bấm Nộp
+    submitBtn.addEventListener('click', () => {
+      if (!selectedAnswer) return;
+      document.getElementById('noticeModal').style.display = 'flex';
+    });
+
+    // Xác nhận lưu ý
+    document.getElementById('confirmNotice').addEventListener('click', () => {
+      document.getElementById('noticeModal').style.display = 'none';
+      showResult();
+    });
+
+    // Hiện kết quả
+function showResult() {
+  const resultText = document.getElementById('resultText');
+  const correctImg = document.getElementById('correctImg');
+  
+  if (selectedAnswer === correctAnswer) {
+    resultText.textContent = "Chính xác! Bạn đã chọn đúng.";
+    correctImg.style.display = 'block';   // hiện ảnh
+    i = 0;
+  } else {
+    resultText.textContent = "Sai rồi! Đáp án đúng là Hà Nội.";
+    correctImg.style.display = 'none';    // ẩn ảnh nếu sai
+  }
+
+  document.getElementById('resultModal').style.display = 'flex';
+  //document.body.classList.add('disable-all');
+  submitBtn.disabled = true;
+  document.getElementById('closeResult').addEventListener('click', () => {
+    document.body.classList.remove('disable-all');
+  });
+}
+
+    // Đóng kết quả (chỉ ẩn modal, trang đã bị disable)
+    document.getElementById('closeResult').addEventListener('click', () => {
+        if(i = 1){
+      document.getElementById('resultText').textContent = 'Lew Lew chỉ được chọn một lần thôi.';
+      document.getElementById('resultText').style.color = "red";}
+      else if(i = 0){
+        document.getElementById('resultText').textContent = 'Bạn không thể tương tác với web được nữa.';
+      }
+    });
+  </script>
+</body>
+</html>

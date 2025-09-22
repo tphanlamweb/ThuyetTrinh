@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Ảnh</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    img { max-width: 80%; height: auto; border-radius: 8px; box-shadow: 0 0 10px #aaa; }
+    .notice { color: #666; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Hiển thị ảnh từ URL</h1>
+  <img id="photo" alt="Chọn ảnh qua tham số ?key=" />
+  <p class="notice">Ví dụ: <code>?key=abc123</code> hoặc <code>?key=dog</code></p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get("key");
+    const img = document.getElementById("photo");
+
+    // Danh sách key hợp lệ và trang đích
+    const redirectMap = {
+      "abc123": "quiz1.html",
+      "xyz789": "page2.html"
+    };
+
+    // Danh sách ảnh sẵn có khi key sai
+    const imageList = ["cat", "dog", "flower"];
+
+    if (key && redirectMap[key]) {
+      // Nếu key đúng => điều hướng
+      window.location.href = "./quiz1.html";
+    } else if (key && imageList.includes(key)) {
+      // Nếu key sai nhưng trùng tên ảnh => hiển thị ảnh
+      img.src = `images/${key}.jpg`;
+    } else {
+      img.alt = "Không tìm thấy key hoặc ảnh.";
+    }
+  </script>
+</body>
+</html>
